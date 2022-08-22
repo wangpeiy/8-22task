@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8-22作业-王佩宇</title>
+</head>
+
+<body>
+    <script>
+        // 作业1: 利用reduce 求 1-100的和 (熟悉reduce语法)
+        const arr = []
+        for (let i = 0; i < 100; i++) {
+            arr[i] = i + 1
+        }
+        const sum = arr.reduce((acc, item) => {
+            return acc + item
+        }, 0);
+        console.log('1-100的和为：', sum);
+
+        // 作业2: 封装一个函数, 利用reduce处理http://www.baidu.com/?name=zhangsan&age=18&sex=nan#, 要求返回一个对象
+        function process(url) {
+            const reg = /(?<=\?).*?(?=#)/g  // 匹配 ?与# 之间的内容 即：name=zhangsan&age=18&sex=nan
+            const params = reg.exec(url)[0].split('&'); // 用split('&')将字符串分割为数组 即：['name=zhangsan', 'age=18', 'sex=nan']
+            return params.reduce((acc, item) => {
+                let key = item.split('=')[0];       // reduce循环每一次的item值为name=zhangsan  age=18  sex=nan
+                let value = item.split('=')[1];     // split('=') 分割item的值 索引为0的作为key 索引为1的作为value
+                acc[key] = value;                   // 每次循环将key:value添加进acc中
+                return acc;
+            }, {});
+        }
+        console.log(process('http://www.baidu.com/?name=zhangsan&age=18&sex=nan#'));
+    </script>
+</body>
+
+</html>
